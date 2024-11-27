@@ -2,6 +2,7 @@ package routes
 
 import (
 	"ambassador/src/controllers"
+	"ambassador/src/middelwares"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -11,7 +12,19 @@ func Setup(app *fiber.App) {
 	admin := api.Group("admin")
 	admin.Post("register", controllers.Register)
 	admin.Post("login", controllers.Login)
-	admin.Get("user", controllers.User)
-	admin.Post("logout", controllers.Logout)
+
+	adminAuthenticated := admin.Use(middelwares.IsAuthenticated)
+	adminAuthenticated.Get("user", controllers.User)
+	adminAuthenticated.Post("logout", controllers.Logout)
+	adminAuthenticated.Put("users/info", controllers.UpdateInfo)
+	adminAuthenticated.Put("users/password", controllers.UpdatePassword)
+	adminAuthenticated.Get("ambassadors", controllers.Ambassadors)
+	adminAuthenticated.Get("products", controllers.Products)
+	adminAuthenticated.Post("products", controllers.CreateProducts)
+	adminAuthenticated.Get("products/:id", controllers.GetProduct)
+	adminAuthenticated.Put("products/:id", controllers.UpdateProduct)
+	adminAuthenticated.Delete("products/:id", controllers.DeleteProduct)
+	adminAuthenticated.Get("users/:id/links", controllers.Link)
+	adminAuthenticated.Get("orders", controllers.Orders)
 
 }
