@@ -15,7 +15,7 @@ type Order struct {
 	County          string      `json:"county" gorm:"null"`
 	Zip             string      `json:"zip" gorm:"null"`
 	Complete        bool        `json:"-" gorm:"default:false"`
-	Total           float64     `json:"total gorm:"-""`
+	Total           float64     `json:"total" gorm:"-"`
 	OrderItems      []OrderItem `json:"order_items" gorm:"foreignKey:OrderId"`
 }
 

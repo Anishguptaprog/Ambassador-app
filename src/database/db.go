@@ -1,8 +1,6 @@
 package database
 
 import (
-	"ambassador/src/models"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -17,6 +15,6 @@ func Connect() {
 	}
 }
 
-func AutoMigrate() {
-	DB.AutoMigrate(models.User{}, models.Product{}, models.Link{}, models.Order{}, models.OrderItem{})
+func AutoMigrate(models ...interface{}) {
+	DB.AutoMigrate(models...)
 }

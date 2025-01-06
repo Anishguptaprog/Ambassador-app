@@ -12,6 +12,7 @@ func Orders(c *fiber.Ctx) error {
 	database.DB.Preload("OrderItems").Find(&orders)
 	for i, order := range orders {
 		orders[i].Name = order.FullName()
+		order.Total = order.GetTotal()
 	}
 	return c.JSON(orders)
 }
